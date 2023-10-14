@@ -1,27 +1,25 @@
 #!/usr/bin/python3
-import math
 
-current_temperature = 10
-thereshold = 0.00001
-previous_temperature = current_temperature - thereshold
+previous_temperature = 10.0
+thereshold = 0.01
 
 def efficiency(temperature):
-  -5.968 + 1.0155 * temperature - 0.0603282 * temperature ** 2 + 0.00155011 * temperature ** 3 - 1.4187 * 10 ** -5 * temperature ** 4  
+   return -5.968 + 1.0155 * temperature - 0.0603282 * temperature ** 2 + 0.00155011 * temperature ** 3 - 1.4187 * 10 ** -5 * temperature ** 4  
 
+next_temperature = previous_temperature + thereshold
 previous_efficency = efficiency(previous_temperature)
 
 
 while True:
      
-     current_efficency = efficiency(current_temperature)
-     print(current_temperature, current_efficency, previous_temperature, previous_efficency)
+     next_efficency = efficiency(next_temperature)
+     print(f"{previous_temperature:.2f}", previous_efficency, f"{next_temperature:.2f}", next_efficency)
      
-     if previous_efficency >= current_efficency:
-        print(f"the optimized temperature estimate is {current_temperature}")  
+     if next_efficency <= previous_efficency:
+        print(f"the optimized temperature estimate is {previous_temperature:.2f}")  
         break
      
      else: 
-        previous_temperature = current_temperature
-        previous_efficency = current_efficency
-        current_temperature += thereshold
-        
+        previous_temperature = next_temperature
+        previous_efficency = next_efficency
+        next_temperature +=thereshold
